@@ -29,3 +29,8 @@ img{
     height: 350px;
     border-radius: 10px;
 }
+
+.checker img{
+    width: 100px;
+    height: 50px;  
+} 
