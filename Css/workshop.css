@@ -1,0 +1,111 @@
+body{
+    background-color: #c3c3c3;
+    max-width: 1000px;
+    margin:0 auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container
+{
+    margin-top: 15px;
+  
+    display: flex;
+    flex-direction: column;
+    border: 2px solid white;
+    
+}
+.form-header 
+{
+ display: flex;
+ flex-direction: row;
+ height: 45px;
+  padding: 10px;
+}
+.form-header  h3
+{
+    margin: 10px;
+    
+}
+.form-header select
+{
+    margin: 10px;
+    background: transparent;
+    border :none;
+}
+.rtext
+{
+    text-decoration: underline;
+    padding: 10px;
+}
+.form-footer
+{
+    display: flex;
+    justify-content: center;
+}
+.forms
+{
+    display: flex;
+ flex-direction: row;
+ padding: 10px;
+}
+.half{
+     
+    display: flex;
+    flex-direction: row;
+    justify-content:space-between;
+    margin-top: 5px;
+    margin-bottom: 25px;
+    margin-right: 50px;
+    
+}
+.half input[type=text], .half input[type=email] , .half input[type=tel], .half select , .half textarea
+{
+    width: 200px;
+}
+
+label {
+    font-weight: bold;
+}
+.underlined
+{
+    text-decoration: underline;
+}
+
+.one , .two
+{
+    max-width: 50%;
+    width: 50%;
+} 
+.required
+{
+    color: red;
+}
+
+.form-header {
+ background-color: #B0E0E6;
+}
+.form-footer{
+    margin-top: 25px;
+    background-color: #F5FFFA;
+   }
+.form-footer input{
+    background-color: #B0E0E6;
+    margin: 5px;
+    width: 100px;
+    color:white;
+    font-size: medium;
+   }
+
+   .checker
+   {
+    display: flex;
+    justify-content: center;
+
+    
+   }  
+   
+.checker img{
+    margin: 5px; 
+    width: 100px;
+    height: 50px;  
+} 
