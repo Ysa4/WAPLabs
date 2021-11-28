@@ -1,0 +1,19 @@
+body{
+    background-color: #c3c3c3;
+}
+
+h3{
+    color:green;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 25px;
+}
+p{
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 16px;
+}
+
+
+.checker img{
+    width: 100px;
+    height: 50px;  
+} 
