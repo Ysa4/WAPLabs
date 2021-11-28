@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSIntro</title>
+    <link rel="stylesheet" href="./Css/jsintro.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css" integrity="sha512-mIs9kKbaw6JZFfSuo+MovjU+Ntggfoj8RwAmJbVXQ5mkAX5LlgETQEweFPI18humSPHymTb5iikEOKWF7I8ncQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   </head>
+    <body>
+    <div class="container">
+        <h2>Js Intro </h2>
+        <p>Create a function using function declaration named sum with one parameter of Array type, the
+            returned result is the sum of all elements which are greater than 20.
+            </p>
+        <pre>
+    <code class="language-js">
+
+        function sum([...arr])
+        {
+            const filteredArray= arr.filter(num  => num > 20);
+            const sum =filteredArray.reduce((total,num)=>total+num,0);
+            return sum;
+        };
+
+    </code>
+</pre>
+<p>Create a function using function expression named getNewArray with one parameter of String
+    Array, return a new array which contains all string, length is greater than and equal to 5, and
+    contains letter ‘a’.</p>
+<pre>
+    <code class="language-js">
+        const getNewArray =function ([...arr]) {
+            const filteredArray= arr.filter(params=>params.length>5 && params.includes('a'));
+            return filteredArray;
+        };
+        
+       
+    </code>
+</pre>
+<p>Testing  the Fuctions </p>
+<pre>
+    <code class="language-js">
+        const names =[
+        'Adam', 'Alex', 'Aaron', 'Ben', 'Carl', 'Dan', 'David', 'Edward', 'Fred',
+         'Frank', 'George', 'Hal', 'Hank', 'Ike', 'John', 'Jack', 'Joe', 'Larry',
+          'Monte', 'Matthew', 'Mark', 'Nathan', 'Otto', 'Paul', 'Peter', 'Roger',
+           'Roger', 'Steve', 'Thomas', 'Tim', 'Ty', 'Victor', 'Walter'
+        ];
+        const ages= [32, 33, 16, 40];
+        console.log(sum(ages)); //105
+        console.log(getNewArray(names)); // (5) ['Edward', 'Matthew', 'Nathan', 'Thomas', 'Walter']
+    </code>
+</pre>
+<div class="checker">
+    <a href="https://validator.w3.org/nu/?doc=http%3A%2F%2Fyeabsiraasfaw.me%2FWAPLabs%2Faboutme.html">
+<img src="./Images/html5_validator.png" alt="html validator">
+
+    </a>
+
+    <a href="https://jigsaw.w3.org/css-validator/validator?uri=http%3A%2F%2Fyeabsiraasfaw.me%2FWAPLabs%2FCss%2Fstyleme.css&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en">
+        <img src="./Images/css_checker.png" alt="html validator">
+        
+            </a>
+</div>
+    </div>
+    <script src="./Js/jsintro.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js" integrity="sha512-hpZ5pDCF2bRCweL5WoA0/N1elet1KYL5mx3LP555Eg/0ZguaHawxNvEjF6O3rufAChs16HVNhEc6blF/rZoowQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+</html>
