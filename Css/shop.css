@@ -52,7 +52,7 @@ nav ul {
 {
     height: 350px;
     width: 100%;
-   
+   margin-bottom: 15px;
     background-image: url("../Images/9167.jpg");
     background-size: cover;
 }
@@ -70,7 +70,7 @@ nav ul {
   display: flex;
   flex-wrap: wrap;
   margin: 10px auto;
-  max-width: 90%;
+  
   justify-content: space-between;
   
 }
@@ -78,9 +78,11 @@ nav ul {
     border: solid 1px #ccc;
     display: flex;
     flex-wrap: wrap;
-    max-width: 200px;
+    max-width: 250px;
     flex-direction: column;
     margin: 10px auto;
+    box-shadow: 10px 10px 10px 10px#888888;
+   
 }
 .title{
     font-size: 18px;
@@ -101,6 +103,7 @@ nav ul {
 .addtocartform
 {
     align-self: center;
+    padding: 5px;
 }
 
 /* footer */
