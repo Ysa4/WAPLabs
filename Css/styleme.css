@@ -41,7 +41,7 @@ a:hover{
 }
 .mood figure{
     border :2px solid white;
-    box-shadow: 10px 10px 10px 10px#888888;
+    box-shadow: 10px 10px 10px 10px #888888;
 }
 .mood figcaption
 {
