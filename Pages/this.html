@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 7 - this keyword</title>
+    <link rel="stylesheet" href="../Css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css" integrity="sha512-mIs9kKbaw6JZFfSuo+MovjU+Ntggfoj8RwAmJbVXQ5mkAX5LlgETQEweFPI18humSPHymTb5iikEOKWF7I8ncQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   </head>
+    <body>
+    <div class="container">
+
+        <h2>Question 1: Fix using wrapper, bind, call, apply</h2>
+     
+        <div class="fullbox">
+
+             <p>
+                 the call to askPassword() in the code below should check the password and then call user.loginOk/loginFail depending on the answer
+                 But it leads to an error Why?
+                </p>
+            <pre>
+                <code class="language-js">
+               
+            function askPassword(ok, fail) {
+                let password = prompt("Password?", '');
+                if (password == "rockstar") ok();
+                else fail();
+                }
+                let user = {
+                name: 'John',
+                loginOk() {
+                console.log(`${this.name} logged in`);
+                },
+                loginFail() {
+                console.log(`${this.name} failed to log in`);
+                },
+                };
+                askPassword(user.loginOk, user.loginFail);
+               </code>
+                </pre>
+           
+         
+                <p>solution</p>
+        <pre>
+  
+        <code class="language-js">
+            
+    function askPassword(ok, fail) {
+        let password = prompt("Password?", '');
+        if (password == "rockstar") ok();
+        else fail();
+        }
+        let user = {
+        name: 'John',
+        loginOk() {
+        console.log(`${this.name} logged in`);
+        },
+        loginFail() {
+        console.log(`${this.name} failed to log in`);
+        },
+        };
+        askPassword(user.loginOk.bind(user), user.loginFail.bind(user));
+        askPassword(() => user.loginOk.call(user), ()=> user.loginFail.call(user));
+        askPassword(() => user.loginOk.apply(user), ()=> user.loginFail.apply(user));
+        askPassword(() => user.loginOk(), ()=> user.loginFail());
+               
+    
+        </code>
+        </pre>
+    
+    </div>
+    <p>•Question 2: Fix the code below using bind</p>
+    <div class="fullbox">
+     
+            <pre>
+                <code class="language-js">
+        // Fix the code below using bind
+        let group = {
+            title: "Our Group",
+            students: ["John", "Pete", "Alice"],
+            showList: function() {
+            this.students.forEach(function(student) {
+            console.log(this.title + ": " + student);
+            });
+            }
+            };
+            group.showList();
+                        
+            
+                </code>
+                </pre>
+                <p>solution</p>
+       <pre>
+       <code class="language-js">
+        //solution
+    let group = {
+        title: "Our Group",
+        students: ["John", "Pete", "Alice"],
+        showList: function() {
+        this.students.forEach(function(student) {
+        console.log(this.title + ": " + student);
+        }.bind(this));
+        }
+        };
+        group.showList();
+   
+       </code>
+       </pre>
+    
+   </div>
+        <div class="checker">
+            <a href="https://validator.w3.org/nu/?doc=http%3A%2F%2Fyeabsiraasfaw.me%2FWAPLabs%2Fjsintro.html"  target="_blank">
+        <img src="../Images/html5_validator.png" alt="html validator">
+        
+            </a>
+        
+            <a href="https://jigsaw.w3.org/css-validator/validator?uri=http%3A%2F%2Fyeabsiraasfaw.me%2FWAPLabs%2FCss%2Fjsintro.css&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en" target="_blank">
+                <img src="../Images/css_checker.png" alt="html validator">
+                
+                    </a>
+        </div>
+            </div>
+            <script src="./Js/jsintro.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js" integrity="sha512-hpZ5pDCF2bRCweL5WoA0/N1elet1KYL5mx3LP555Eg/0ZguaHawxNvEjF6O3rufAChs16HVNhEc6blF/rZoowQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        </body>
+        </html>

@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 8 - Inheritance </title>
+    <link rel="stylesheet" href="../Css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css" integrity="sha512-mIs9kKbaw6JZFfSuo+MovjU+Ntggfoj8RwAmJbVXQ5mkAX5LlgETQEweFPI18humSPHymTb5iikEOKWF7I8ncQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   </head>
+    <body>
+    <div class="container">
+
+        <h2>Question 1:</h2>
+     
+        <div class="fullbox">
+
+         <ul>
+             <li>Create an object student using object literal which has</li>
+             <li>Properties: firstName:String, lastName:String, grades: Array</li>
+             <li>Methods:
+              <ul>
+                <li>inputNewGrade(newGrade): push newGrade to grades</li>
+                <li>computeAverageGrade(): return average of grades</li>
+              </ul>
+             </li>
+             <li>Create an Array with multiple students which are created using Object.create();
+                <ul>
+                    <li>Then compute the average grade for all students in the array</li>
+                </ul>
+              </li>
+         </ul>    
+            <pre>
+                <code class="language-js">
+const student = {
+    firstName: '',
+    lastName: '',
+    grades: [],
+    inputNewGrade: function (newGrade) {
+    this.grades.push(newGrade);
+    },
+    computeAverageGrade() {
+    return this.grades.reduce((sum, current, index, array) => sum + current / array.length, 0);
+    }
+}
+const stu1 = Object.create(student);
+stu1.firstName = 'John';
+stu1.lastName = 'Smith';
+stu1.inputNewGrade(88);
+stu1.inputNewGrade(98);
+stu1.inputNewGrade(86);
+stu1.inputNewGrade(80);
+const stu2 = Object.create(student);
+stu2.firstName = 'John2';
+stu2.lastName = 'Smith2';
+stu2.inputNewGrade(85);
+stu2.inputNewGrade(95);
+stu2.inputNewGrade(85);
+stu2.inputNewGrade(70);
+const students = [stu1, stu2];
+const result = students.reduce((average, stu, index, array) => average + stu.
+computeAverageGrade() / array.length, 0);
+console.log(result);
+               </code>
+                </pre>
+           
+         
+                <p>Question 2: Redo the Question 1 using Constructor Function</p>
+        <pre>
+  
+        <code class="language-js">
+function Student(firstName, lastName, grades = []) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.grades = grades;
+        }
+        Student.prototype.inputNewGrade = function (newGrade) {
+        this.grades.push(newGrade);
+        }
+        Student.prototype.computeAverageGrade = function () {
+        return this.grades.reduce((sum, current, index, array) => sum + current /
+        array.length, 0);
+    }
+    const stu1 = new Student('John', 'Smith');
+    stu1.inputNewGrade(88);
+    stu1.inputNewGrade(98);
+    stu1.inputNewGrade(86);
+    stu1.inputNewGrade(80);
+    const stu2 = new Student('John2', 'Smith2');
+    stu2.inputNewGrade(85);
+    stu2.inputNewGrade(95);
+    stu2.inputNewGrade(85);
+    stu2.inputNewGrade(70);
+    const students = [stu1, stu2];
+    const result = students.reduce((average, stu, index, array) => average +
+    stu.computeAverageGrade() / array.length, 0);
+    console.log(result);
+    
+        </code>
+        </pre>
+    
+    </div>
+    <p>Question 3: <br> Add a new method named sort() without parameters in built-in constructor function
+        Array. It’ll sort all elements in the array in ascending order </p>
+    <div class="fullbox">
+     
+            <pre>
+                <code class="language-js">
+                    Array.prototype.mysort = function () {
+                        let arr = this;
+                        let len = arr.length;
+                        for (let i = len - 1; i >= 0; i--) {
+                        for (let j = 1; j <= i; j++) {
+                        if (arr[j - 1] > arr[j]) {
+                        let temp = arr[j - 1];
+                        arr[j - 1] = arr[j];
+                        arr[j] = temp;
+                        }
+                        }
+                        }
+                        return arr;
+                       }
+                       console.log([7, 5, 2, 4, 3, 9].mysort());
+                </code>
+                </pre>
+                <p>Question 4: Use Object literal and constructor function to create LinkedList. Methods below:
+                    </p>
+                    <ol>
+                        <li>add(value)</li>
+                        <li>remove(value)</li>
+                        <li>print()</li>
+                    </ol>
+       <pre>
+       <code class="language-js">
+//After completion, we can call methods as below and see the results in console if call print().
+linkedlist.add(1);
+linkedlist.add(2);
+linkedlist.add(3);
+linkedlist.print(); //in the console, you should see: LinkedList{1,2,3}
+linkedlist.remove(3);
+linkedlist.print(); //in the console, you should see: LinkedList{1,3}
+   
+       </code>
+       </pre>
+    
+<p>Object Literal solution:</p>
+       <pre>
+        <code class="language-js">
+let linkedlist = {};
+linkedlist.add = function(element) {
+    if (this.value === undefined) {
+    this.value = element;
+    this.next = null;
+    } else {
+    let current = this;
+    while (current.next) {
+    current = current.next;
+    }
+    current.next = { value: element, next: null };
+    }
+}
+linkedlist.remove = function(element) {
+    var current = this;
+    var prev = null;
+    while (current) {
+    if (current.value === element) {
+    if (prev == null) {
+    this.value = current.next.value;
+    this.next = current.next.next;
+    } else {
+    prev.next = current.next;
+    }
+    return true;
+    }
+    prev = current;
+    current = current.next;
+    }
+    return false;
+}
+linkedlist.printHelper = function(list, result) {
+    if (list.next == null) {
+    result += list.value;
+    return result;
+    }
+    result += list.value + ',';
+    return this.printHelper(list.next, result);
+}
+linkedlist.print = function() {
+    let result = 'LinkedList{';
+    result = this.printHelper(this, result);
+    result += '}';
+    console.log(result);
+}
+linkedlist.add(1);
+linkedlist.add(2);
+linkedlist.add(3);
+linkedlist.print(); //in the console, you should see: LinkedList{1,2,3}
+linkedlist.remove(3);
+linkedlist.print(); //in the console, you should see: LinkedList{1,3}
+        </code>
+        </pre>
+
+
+
+
+        <p>Constructor Function Solution:</p>
+
+        <pre>
+            <code class="language-js">
+function LinkedList(){
+
+}
+LinkedList.prototype.add = function(element) {
+    if (this.value === undefined) {
+    this.value = element;
+    this.next = null;
+    } else {
+    let current = this;
+    while (current.next) {
+    current = current.next;
+    }
+    current.next = { value: element, next: null };
+    }
+}
+LinkedList.prototype.remove = function(element) {
+    var current = this;
+    var prev = null;
+    while (current) {
+    if (current.value === element) {
+    if (prev == null) {
+    this.value = current.next.value;
+    this.next = current.next.next;
+    } else {
+    prev.next = current.next;
+    }
+    return true;
+    }
+    prev = current;
+    current = current.next;
+    }
+    return false;
+}
+LinkedList.prototype.printHelper = function(list, result) {
+    if (list.next == null) {
+    result += list.value;
+    return result;
+    }
+    result += list.value + ',';
+    return this.printHelper(list.next, result);
+}
+LinkedList.prototype.print = function() {
+    let result = 'LinkedList{';
+    result = this.printHelper(this, result);
+    result += '}';
+    console.log(result);
+}
+let linkedlist = new LinkedList();
+linkedlist.add(1);
+linkedlist.add(2);
+linkedlist.add(3);
+linkedlist.print(); //in the console, you should see: LinkedList{1,2,3}
+linkedlist.remove(3);
+linkedlist.print(); //in the console, you should see: LinkedList{1,3}
+            </code>
+            </pre>
+   </div>
+        <div class="checker">
+            <a href="https://validator.w3.org/nu/?doc=http%3A%2F%2Fyeabsiraasfaw.me%2FWAPLabs%2Fjsintro.html"  target="_blank">
+        <img src="../Images/html5_validator.png" alt="html validator">
+        
+            </a>
+        
+            <a href="https://jigsaw.w3.org/css-validator/validator?uri=http%3A%2F%2Fyeabsiraasfaw.me%2FWAPLabs%2FCss%2Fjsintro.css&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en" target="_blank">
+                <img src="../Images/css_checker.png" alt="html validator">
+                
+                    </a>
+        </div>
+            </div>
+            <script src="./Js/jsintro.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js" integrity="sha512-hpZ5pDCF2bRCweL5WoA0/N1elet1KYL5mx3LP555Eg/0ZguaHawxNvEjF6O3rufAChs16HVNhEc6blF/rZoowQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        </body>
+        </html>

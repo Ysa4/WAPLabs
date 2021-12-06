@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 9 - Class </title>
+    <link rel="stylesheet" href="../Css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css" integrity="sha512-mIs9kKbaw6JZFfSuo+MovjU+Ntggfoj8RwAmJbVXQ5mkAX5LlgETQEweFPI18humSPHymTb5iikEOKWF7I8ncQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   </head>
+    <body>
+    <div class="container">
+
+        <h2>Homework</h2>
+     
+        <div class="fullbox">
+
+             <p>
+                Question 1:Answer below questions based on Clock constructor function(in class exercise) and Clock class.
+                </p>
+
+                <ul>
+                    <li>Also add a line of code that will stop the clock after 10 ticks</li>
+                    <li>What is the inner function of the constructor function?</li>
+                    <li>What is the local variable of the constructor function?</li>
+                    <li>What is the clock “interface” returned by the constructor function?</li>
+                    <li>What are the closures?</li>
+                    <li>What are the private variables and functions?</li>
+                    <li>What are the public methods?</li>
+                    <li>How does this example illustrate that a JavaScript class is really a function and not an object?</li>
+                </ul>
+
+                <div class="box">
+                    <div class="half"><pre>
+                        <code class="language-js">
+function Clock({ template }) {
+        let timer;
+        function render() {
+        let date = new Date();
+        let hours = date.getHours();
+        if (hours < 10) hours = '0' + hours;
+        let mins = date.getMinutes();
+        if (mins < 10) mins = '0' + mins;
+        let secs = date.getSeconds();
+        if (secs < 10) secs = '0' + secs;
+        let output = template
+        .replace('h', hours)
+        .replace('m', mins)
+        .replace('s', secs);
+        console.log(output);
+        }
+        this.stop = function () {
+        clearInterval(timer);
+        };
+        this.start = function () {
+        render();
+        timer = setInterval(render, 1000);
+        };
+    }
+    let clock = new Clock({ template: 'h:m:s' });
+    clock.start();
+        
+                       </code>
+                        </pre></div>
+                    <div class="half">
+
+                        <pre>
+                            <code class="language-js">
+class Clock {
+    constructor({ template }) {
+        this.template = template;
+        }
+        render() {
+        let date = new Date();
+        let hours = date.getHours();
+        if (hours < 10) hours = '0' + hours;
+        let mins = date.getMinutes();
+        if (mins < 10) mins = '0' + mins;
+        let secs = date.getSeconds();
+        if (secs < 10) secs = '0' + secs;
+        let output = this.template
+        .replace('h', hours)
+        .replace('m', mins)
+        .replace('s', secs);
+        console.log(output);
+        }
+        stop() {
+        clearInterval(this.timer);
+        }
+        start() {
+        this.render();
+        this.timer = setInterval(() => this.render(), 1000);
+        }
+    }
+    let clock = new Clock({ template: 'h:m:s' });
+    clock.start();
+                           </code>
+                            </pre>
+
+                    </div>
+                </div>
+            
+           
+         
+                <p>solution</p>
+    
+  <div class="box">
+        <div class="half"><pre>
+            <code class="language-js">
+function Clock({ template }) {
+        let timer;
+        function render() {
+        let date = new Date();
+        let hours = date.getHours();
+        if (hours < 10) hours = '0' + hours;
+        let mins = date.getMinutes();
+        if (mins < 10) mins = '0' + mins;
+        let secs = date.getSeconds();
+        if (secs < 10) secs = '0' + secs;
+        let output = template
+        .replace('h', hours)
+        .replace('m', mins)
+        .replace('s', secs);
+        console.log(output);
+        }
+        this.stop = function () {
+        clearInterval(timer);
+        };
+        this.start = function () {
+        render();
+        timer = setInterval(render, 1000);
+        };
+    }
+    let clock = new Clock({ template: 'h:m:s' });
+    clock.start();
+           </code>
+            </pre></div>
+        <div class="half">
+          <p>  Answer below questions based on Clock
+            constructor function.</p>
+
+<ul>
+    <li>Also add a line of code that will stop the clock
+        after 10 ticks<br>
+        setTimeout(()=>clock.stop(), 10000); </li>
+    <li>What is the inner function of the constructor
+        function?<br>
+        render</li>
+    <li>What is the local variable of the constructor
+        function?<br>
+        timer</li>
+    <li> What is the clock “interface” returned by the
+        constructor function?<br>
+        An object of Clock</li>
+    <li> What are the closures?<br>
+        No</li>
+    <li>What are the private variables and functions?<br>
+        timer, render</li>
+    <li>
+        What are the public methods?<br>
+        stop,start</li>
+</ul>
+
+
+        </div>
+    </div>
+
+
+
+    <div class="box">
+        <div class="half"><pre>
+            <code class="language-js">
+class Clock {
+        constructor({ template }) {
+        this.template = template;
+        }
+        render() {
+        let date = new Date();
+        let hours = date.getHours();
+        if (hours < 10) hours = '0' + hours;
+        let mins = date.getMinutes();
+        if (mins < 10) mins = '0' + mins;
+        let secs = date.getSeconds();
+        if (secs < 10) secs = '0' + secs;
+        let output = this.template
+        .replace('h', hours)
+        .replace('m', mins)
+        .replace('s', secs);
+        console.log(output);
+        }
+        stop() {
+        clearInterval(this.timer);
+        }
+        start() {
+        this.render();
+        this.timer = setInterval(() => this.render(), 1000);
+        }
+    }
+    let clock = new Clock({ template: 'h:m:s' });
+    clock.start();
+           </code>
+            </pre></div>
+        <div class="half">
+          <p>  Answer below questions based on Clock
+            constructor function.</p>
+
+<ul>
+    <li>Also add a line of code that will stop the clock
+        after 10 ticks<br>
+        setTimeout(()=>clock.stop(), 10000); </li>
+    <li>What is the inner function of the constructor
+        function?<br>
+        No</li>
+    <li>What is the local variable of the constructor
+        function?<br>
+        No</li>
+    <li> What is the clock “interface” returned by the
+        constructor function?<br>
+        An object of Clock</li>
+    <li> What are the closures?<br>
+        No</li>
+    <li>What are the private variables and functions?<br>
+        No</li>
+    <li>
+        What are the public methods?<br>
+        stop,start</li>
+        <li>
+            How does this example illustrate that a
+            JavaScript class is really a function and not
+            an object? <br>
+            I don’t see the actual relationship here.
+            Discuss in the class.</li>
+</ul>
+
+
+        </div>
+    </div>
+
+    <p>Question 2: Use class syntax to create LinkedList. Methods below:
+    </p>
+    <ol>
+        <li>add(value)</li>
+        <li>remove(value)</li>
+        <li>print()</li>
+    </ol>
+    <p>You’re allowed to add other methods if it’s necessary</p>
+<pre>
+    <code class="language-js">
+//After completion, we can call methods as below and see the results in console if call print().
+linkedlist.add(1);
+linkedlist.add(2);
+linkedlist.add(3);
+linkedlist.print(); //in the console, you should see: LinkedList{1,2,3}
+linkedlist.remove(3);
+linkedlist.print(); //in the console, you should see: LinkedList{1,3}
+           
+               </code>
+               </pre>
+
+               <p>solution</p>
+
+
+               <pre>
+                <code class="language-js">
+class LinkedList {
+constructor(arr){
+    if(arr){
+    arr.forEach(elem => this.add(elem));
+    }
+}
+    add(element) {
+    if (this.value === undefined) {
+    this.value = element;
+    this.next = null;
+    } else {
+    let current = this;
+    while (current.next) {
+    current = current.next;
+    }
+    current.next = { value: element, next: null };
+    }
+    }
+    remove(element) {
+    var current = this;
+    var prev = null;
+    while (current) {
+    if (current.value === element) {
+    if (prev == null) {
+    this.value = current.next.value;
+    this.next = current.next.next;
+    } else {
+    prev.next = current.next;
+    }
+    return true;
+    }
+    prev = current;
+    current = current.next;
+    }
+    return false;
+    }
+    printHelper(list, result) {
+    if (list.next == null) {
+    result += list.value;
+    return result;
+    }
+    result += list.value + ',';
+    return this.printHelper(list.next, result);
+    }
+    print() {
+    let result = 'LinkedList{';
+    result = this.printHelper(this, result);
+    result += '}';
+    console.log(result);
+    }
+}
+let linkedlist = new LinkedList();
+linkedlist.add(1);
+linkedlist.add(2);
+linkedlist.add(3);
+linkedlist.print(); //in the console, you should see: LinkedList{1,2,3}
+linkedlist.remove(3);
+linkedlist.print(); //in the console, you should see: LinkedList{1,3}
+                       
+                           </code>
+                           </pre>
+
+
+
+                           <p>Question 3: <br>
+                            This is a quiz system which allows students to take quiz, get each student's quiz score and
+                            compute average score of students.
+                        </p>
+                        <p>You need to use constructor functions or class syntax to implement Student, Question and Quiz
+                            </p>
+
+                            <p>
+                                constructor function/class Student:<br>
+                                properties:<br>
+                                studentId: a unique student id<br>
+                                answers: holds an array that records the student's answers for the questions.<br>
+                                method: addAnswer(question) - add student's question(id, answer) to answers array.<br>
+                             
+                            </p>   <hr>
+                                <p> function/class Question:<br>
+                                properties:<br>
+                                qid: unique quesiton id<br>
+                                answer: hold quiz correct answer or student's answer<br>
+                                method: checkAnswer(answer) - used to check if student's answer is correct<br>
+                            </p>
+                            <p>
+                                constructor function/class Quiz:<br>
+                                properties:<br>
+                                questions: It's a Map which holds question id and correct answers. The key is question id, the
+                                value is the correct answer for this question<br>
+                                students: an array holds all students<br>
+                                methods:<br>
+                                   scoreStudent(sid), computes the quiz score for this student<br>
+                                   getAverageScore(), computes the average score over all students<br>
+                            </p>
+
+                        <p>After you complete the Question, Student and Quiz constructor functions, we may use the
+                            system as below:<br>
+                            Your system should return the correct result for getAverageScore() and scoreStudent(sid) as the
+                            expected result.</p>
+
+                            <pre>
+                                <code class="language-js">
+const student1 = new Student(10);
+student1.addAnswer(new Question(2, 'a'));
+student1.addAnswer(new Question(3, 'b'));
+student1.addAnswer(new Question(1, 'b'));
+const student2 = new Student(11);
+student2.addAnswer(new Question(3, 'b'));
+student2.addAnswer(new Question(2, 'a'));
+student2.addAnswer(new Question(1, 'd'));
+const students = [student1, student2];
+const questions =[new Question(1, 'b'), new Question(2, 'a'), new
+Question(3, 'b')];
+const quiz = new Quiz(questions, students);
+let scoreforStudent10 = quiz.scoreStudentBySid(10);
+console.log(scoreforStudent10); //Expected Result: 3
+let scoreforStudent11 = quiz.scoreStudentBySid(11);
+console.log(scoreforStudent11); //Expected Result: 2
+let average = quiz.getAverageScore();
+console.log(average); //Expected Reuslt: 2.5
+                                       
+                                           </code>
+                                           </pre>
+
+
+
+                           <p>solution</p>
+                           <pre>
+                            <code class="language-js">
+function Question(qid, answer) {
+this.qid = qid;
+this.answer = answer;
+}
+Question.prototype.checkAnswer = function(answer) {
+return this.answer === answer;
+}
+function Student(studentId) {
+this.studentId = studentId;
+this.answers = [];
+}
+Student.prototype.addAnswer = function(question) {
+this.answers.push(question);
+}
+function Quiz(questions, students) {
+this.questions = new Map();
+questions.forEach(q => this.questions.set(q.qid, q.answer));
+this.students = students;
+}
+Quiz.prototype.scoreStudentBySid = function(studentId) {
+const student = this.students.filter(s => s.studentId === studentId)[0];
+return student.answers.reduce((sum, currentQuestion) => {
+if (currentQuestion.checkAnswer(this.questions.get(currentQuestion.qid)))
+{
+sum = sum + 1;
+}
+return sum;
+}, 0);
+}
+Quiz.prototype.getAverageScore = function() {
+return this.students.reduce((accmulator, student, index, array) => {
+return accmulator + this.scoreStudentBySid(student.studentId) / array.len
+gth;
+}, 0);
+}
+const questions = [new Question(1, 'b'), new Question(2, 'a'), new Question(3, 'b
+')];
+const student1 = new Student(10);
+student1.addAnswer(new Question(2, 'a'));
+student1.addAnswer(new Question(3, 'b'));
+student1.addAnswer(new Question(1, 'b'));
+const student2 = new Student(11);
+student2.addAnswer(new Question(3, 'b'));
+student2.addAnswer(new Question(2, 'a'));
+student2.addAnswer(new Question(1, 'd'));
+const students = [student1, student2];
+const quiz = new Quiz(questions, students);
+let scoreforStudent10 = quiz.scoreStudentBySid(10);
+console.log(scoreforStudent10);
+let scoreforStudent11 = quiz.scoreStudentBySid(11);
+console.log(scoreforStudent11);
+let average = quiz.getAverageScore();
+console.log(average);
+
+                                   
+                                       </code>
+                                       </pre>
+                    <p>solution 2</p>
+                    <pre>
+                    <code class="language-js">
+class Question {
+constructor(questionId, answer) {
+this.questionId = questionId;
+this.answer = answer;
+}
+checkAnswer(correctAnswer) {
+return this.answer === correctAnswer;
+}
+}
+class Student {
+constructor(studentId, answers = []) {
+this.studentId = studentId;
+this.answers = answers;
+}
+addAnswer(question) {
+this.answers.push(question);
+}
+}
+class Quiz {
+constructor(questionsArray = [], students = []) {
+this.questions = new Map();
+//TODO: add line to convert questionArray to Map questions
+questionsArray.forEach(question => this.questions.set(question.questionId
+, question.answer));
+this.students = students;
+}
+scoreStudent(studentId) {
+//TODO: compute student score based on answers
+let student = this.students.filter(student => student.studentId === stude
+ntId)[0];
+return student.answers.reduce((sum, currentQuestion) => {
+let questionId = currentQuestion.questionId; //find quesiton id
+let correctAnswer = this.questions.get(questionId); //get correctAnsw
+er from Map
+let result = currentQuestion.checkAnswer(correctAnswer); //compare cu
+rrentQuestion answer with correctAnswer
+if (result) {
+sum = sum + 1;
+}
+// if(currentQuestion.checkAnswer(this.questions.get(currentQuestion.
+questionId))){
+// sum = sum + 1;
+// }
+return sum;
+}, 0);
+}
+getAverageScore() {
+return this.students.reduce((average, currentStudent, index, array) => av
+erage + this.scoreStudent(currentStudent.studentId) / array.length, 0);
+}
+}
+const questionsArraywithCorrectAnswers = [new Question(1, 'a'), new Question(2, '
+b'), new Question(3, 'd')];
+let student1 = new Student(1001, [new Question(1, 'b'), new Question(2, 'b'), new
+Question(3, 'b')]);
+let student2 = new Student(1002);
+student2.addAnswer(new Question(1, 'a'));
+student2.addAnswer(new Question(2, 'b'));
+student2.addAnswer(new Question(3, 'd'));
+const students = [student1, student2];
+let quizObj = new Quiz(questionsArraywithCorrectAnswers, students);
+console.log(quizObj.scoreStudent(1001));
+console.log(quizObj.scoreStudent(1002));
+console.log(quizObj.getAverageScore());
+                            
+                                </code>
+                                </pre>        
+
+   
+        <div class="checker">
+            <a href="https://validator.w3.org/nu/?doc=http%3A%2F%2Fyeabsiraasfaw.me%2FWAPLabs%2Fjsintro.html"  target="_blank">
+        <img src="../Images/html5_validator.png" alt="html validator">
+        
+            </a>
+        
+            <a href="https://jigsaw.w3.org/css-validator/validator?uri=http%3A%2F%2Fyeabsiraasfaw.me%2FWAPLabs%2FCss%2Fjsintro.css&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en" target="_blank">
+                <img src="../Images/css_checker.png" alt="html validator">
+                
+                    </a>
+        </div>
+            </div>
+            <script src="./Js/jsintro.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js" integrity="sha512-hpZ5pDCF2bRCweL5WoA0/N1elet1KYL5mx3LP555Eg/0ZguaHawxNvEjF6O3rufAChs16HVNhEc6blF/rZoowQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        </body>
+        </html>

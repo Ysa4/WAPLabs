@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 6 - Execution Context</title>
+    <link rel="stylesheet" href="../Css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css" integrity="sha512-mIs9kKbaw6JZFfSuo+MovjU+Ntggfoj8RwAmJbVXQ5mkAX5LlgETQEweFPI18humSPHymTb5iikEOKWF7I8ncQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   </head>
+    <body>
+    <div class="container">
+        <h2>Lab 6 - Execution Context  </h2>
+    <div class="box">
+     <div class="half">
+         <ul>
+            Homework
+             <li> Draw a lexical environment diagram for the right
+                code and show:
+                <ul>
+                    <li>global lexical environment (LE)</li>
+                    <li>LE for makeArmy ()</li>
+                    <li>LE for LE of the while loop</li>
+                    <li>LE for army[0]</li>
+                    <li>What will army[0] alert?</li>
+                    <li>Can you fix the code?</li>
+                    <li>How will the diagram change?</li>
+                </ul>
+             </li>
+         </ul>
+       
+         <img   class="helper_img" src="../Images/ecPicture1.jpg" alt="helper image">
+     </div>
+ <div class="half">
+    <pre>
+    <code class="language-js">
+        function makeArmy () { 
+            let shooters = []; 
+            let i = 0;
+            while (i < 2) {
+                let shooter = function () { alert(i);
+                };
+                shooters .push(shooter );
+                i++;
+            }
+            return shooters ;
+        }
+        let army = makeArmy (); army[0];
+
+    </code>
+    </pre>
+     </div>
+</div>
+
+<div class="fullbox">
+<p>global lexical environment (LE)</p>
+<p>creation phase</p>
+<pre>
+    <code class="language-js">
+        LE{makeArmy:fn,outer:null}
+       
+    </code>
+</pre>
+<p>execution phase</p>
+<pre>
+    <code class="language-js">
+        LE{makeArmy:fn, army:[fn,fn],outer:null}
+        
+       
+    </code>
+</pre>
+   
+<p>LE for makeArmy ()</p>
+<p>creation phase</p>
+<pre>
+    <code class="language-js">
+        LE{arguments:{length:0},outer:global}
+       
+    </code>
+</pre>
+<p>execution phase</p>
+<p>After while-loop, changed the condition to while(i&lt;2)to save time. The LE is being changed as below</p>
+<pre>
+    <code class="language-js">
+        LE{arguments:{length:0}, shooters:[fn,fn],outer:global}
+        
+       
+    </code>
+</pre>
+            
+          
+     
+            <p>LE for LE of the while loop</p>
+               <p>Each iteration of while loop has own LE, only use i=0 as example here.</p>
+                    <p>creation phase</p>
+        <pre>
+            <code class="language-js">
+                LE{outer:makeArmy}
+            
+            </code>
+        </pre>
+        <p>execution phase</p>
+       
+        <pre>
+            <code class="language-js">
+                shooters.push(shooter);
+                i++;
+           
+                //The two statements above will cause the changes in makeArmy() functional EC 
+                //while-loop EC: 
+                LE{outer:makeArmy, shooters:[fn,fn]}
+
+                //makeArmy() functional EC: 
+                LE{outer:global , arguments:{length:0}, shooters:[fn,fn]}
+             </code>
+        </pre>
+            <p>LE for army[0]</p>
+            <p>creation phase</p>
+            <pre>
+                <code class="language-js">
+                    /*closure scope
+                    i=2
+                   outer:makeArmy
+                    */
+                    // army[0] functional Ec:creation
+                    LE{arguments:{length:0},outer:closurescope}
+                
+                </code>
+            </pre>
+         
+            <p>execution phase</p>
+       
+            <pre>
+                <code class="language-js">
+                    /*closure scope
+                    i=2
+                   outer:makeArmy
+                    */
+                    // army[0] functional Ec:creation
+                    LE{arguments:{length:0},outer:closurescope}
+                 </code>
+            </pre>
+            <pre>
+            <p>What will army[0] alert?</p>
+            <pre>
+                <code class="language-js">
+                    //the alert will be
+                    2
+                 </code>
+            </pre>
+            <p>Can you fix the code?</p>
+            <pre>
+                <code class="language-js">
+                    function makeArmy() 
+                    {
+                            let shooters = []; 
+                            let i = 0;
+                            while (i < 2) {
+                                let j = i;
+                                let shooter = function() { console.log(j);
+                                };
+                                shooters.push(shooter); i++;
+                            }
+                            return shooters;
+                    }
+                    let army = makeArmy(); army.forEach(f => f());
+                 </code>
+            </pre>
+            <p>How will the diagram change?</p>
+            <img  class="helper_img2" src="../Images/ecPicture2.jpg" alt="helper image">
+
+            <p>Question 2: Write a function printNumbers(from, to) that outputs a number every second, starting from from and ending with to.</p>
+            <pre>
+                <code class="language-js">
+                    function printNumbers(from,to) 
+                    {
+                            let current = from; 
+                            let timerId = setInterval(function(){
+                              console.log(current);
+                              if(current == to){
+                                  clearInterval(timerId);
+                            }
+                            current++;
+                            },1000);
+                            
+                    }
+                    //usage
+                    printNumbers(5,10);
+                 </code>
+            </pre>
+
+            <p>Question 3:   What will setTimeout show?<br>
+In the code below there's a  setTimeout  call scheduled, then a heavy calculation is run, that takes more than
+1OOms to finish.
+<br>
+When will the cheduled function run?
+</p>
+<ol>
+    <li>After the loop.</li>
+    <li>Before the loop.</li>
+    <li>In the beginning of the loop.</li>
+</ol>
+<p>What is  alert going to show?</p>
+<pre>
+    <code class="language-js">
+        let i = 0;
+        setTimeout ( ( )=>	alert ( i) ,100 ) ; //?
+        //assume that the time to	execute this function is >100ms
+        for (let j= 0; j<100000000; j++){
+            i++;
+        }
+     </code>
+</pre>
+
+<p>Solution:</p>
+<p>Any setTimeout will run only after the current code has finished.<br> The i will be the last one: 100000000.</p>
+<pre>
+    <code class="language-js">
+        let i = 0;
+        setTimeout ( ( )=>	alert (i) ,100 ) ; // 100000000
+        //assume that the time to	execute this function is >100ms
+        for (let j= 0; j<100000000; j++){
+            i++;
+        }
+     </code>
+</pre>
+        </div>
+<div class="checker">
+    <a href="https://validator.w3.org/nu/?doc=http%3A%2F%2Fyeabsiraasfaw.me%2FWAPLabs%2Fjsintro.html"  target="_blank">
+<img src="../Images/html5_validator.png" alt="html validator">
+
+    </a>
+
+    <a href="https://jigsaw.w3.org/css-validator/validator?uri=http%3A%2F%2Fyeabsiraasfaw.me%2FWAPLabs%2FCss%2Fjsintro.css&profile=css3svg&usermedium=all&warning=1&vextwarning=&lang=en" target="_blank">
+        <img src="../Images/css_checker.png" alt="html validator">
+        
+            </a>
+</div>
+    </div>
+    <script src="./Js/jsintro.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js" integrity="sha512-hpZ5pDCF2bRCweL5WoA0/N1elet1KYL5mx3LP555Eg/0ZguaHawxNvEjF6O3rufAChs16HVNhEc6blF/rZoowQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</body>
+</html>
