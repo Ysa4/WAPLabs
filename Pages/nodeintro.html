@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 10 - Node.js Intro</title>
+    <link rel="stylesheet" href="../Css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css" integrity="sha512-mIs9kKbaw6JZFfSuo+MovjU+Ntggfoj8RwAmJbVXQ5mkAX5LlgETQEweFPI18humSPHymTb5iikEOKWF7I8ncQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   </head>
+    <body>
+    <div class="container">
+
+        <p>Write the necessary Node script to make this code work for all arrays: [1,2,3,4,5,6,7,8].even(); // [2,4,6,8] [1,2,3,4,5,6,7,8].odd();
+             // [1,3,5,7] Test your code in Node.JS CLI</p>
+     
+        <div class="fullbox">
+
+            <pre>
+                <code class="language-js">
+                    Array.prototype.even= function ()
+                    {
+                        return this.filter(a=>a%2==0);
+                    };
+
+                    Array.prototype.odd = function (){
+                        return this.filter(a=>a%2!==0);
+                    };
+
+                    let arr = [1, 2, 3, 4, 5, 6, 7, 8];
+                    console.log(arr.even());
+                    console.log(arr.odd());
+               </code>
+                </pre>
+           
+         
+                <p>Question 2 <br>
+                    1. Explain why do we want sometimes to use setImmediate instead of using setTimeout?<br>
+                    setTimeout runs in Timer phase, setImmediate runs in check phase. For example: If
+there's a case needs to run just before close phase, we can use setImmediate.
+                    </p>
+        <pre>
+  
+        <code class="language-js">
+            var fs = require('fs'); var path = require('path');
+            fs.readFile(path.join(__dirname, 'greet.txt'), 'utf8', function(err, data) {
+            setTimeout(() => { console.log('timeout'); }, 0);
+            setImmediate(() => { console.log('immediate'); });
+            process.nextTick(() => console.log('nexttick')); });
+    
+        </code>
+        </pre>
+    
+    </div>
+    <p>2. Explain the difference between process.nextTick and setImmediate?</p>
+    <div class="fullbox">
+     <p>callback of process.nextTick get executed multiple chances in one iteration - highest priotiry.
+        setImmediate only get executed once in one cycle.
+        how many callbacks will be executed in one iteration? process.nextTick() - all of callbacks in
+        nextTick queue, drain out - Don't use while true loop on process.nextTick, will block event
+        loop. setImmediate - certain, the remaining for next iteration/tick
+        process.nextTick - API provided natively by Node.js setImmediate - provided by libuv</p>
+   </div>
+
+   <p>3. Does Node.js has window object?
+</p>
+   <div class="fullbox">
+    <p>No</p>
+  </div>
+       
+            </div>
+            <script src="./Js/jsintro.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js" integrity="sha512-hpZ5pDCF2bRCweL5WoA0/N1elet1KYL5mx3LP555Eg/0ZguaHawxNvEjF6O3rufAChs16HVNhEc6blF/rZoowQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        </body>
+        </html>

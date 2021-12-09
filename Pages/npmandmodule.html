@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab 11 - Npm and http module</title>
+    <link rel="stylesheet" href="../Css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/themes/prism-okaidia.min.css" integrity="sha512-mIs9kKbaw6JZFfSuo+MovjU+Ntggfoj8RwAmJbVXQ5mkAX5LlgETQEweFPI18humSPHymTb5iikEOKWF7I8ncQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   </head>
+    <body>
+    <div class="container">
+
+        <p>Question 1: <br>
+             Create a simple Node script that converts 'www.miu.edu' domain name to the equivalent IP address. 
+            </p>
+     
+        <div class="fullbox">
+
+            
+            <pre>
+                <code class="language-js">
+                    const dns =require('dns');
+                    dns.resolve4('www.miu.edu',(err,addr)=>{
+                        if(err) throw err;
+                         console.log(`address :${JSON.stringify(addr)}`);
+                    });
+               </code>
+                </pre>
+           
+    
+    </div>
+    <p> 2 Create a web server that's going to send a response of big image (bigger then 3MB) to any client that sends a request to your specified server:port. Use the best way for performance.
+         (Try to solve this in many different ways and inspect the loading time in the browser and send many requests to see the performance differences)</p>
+    <div class="fullbox">
+        <p>solution 1 </p>
+            <pre>
+                <code class="language-js">
+                    const http=require('http');
+                    const fs =require('fs');
+                    const path =require('path');
+
+                    http.createServer((req,res)=>{
+                    res.writeHead(200,{
+                    'Content-Type':'image/jpeg'
+                    });
+                    const imgFile = fs.readFileSync(path.join('./','test.jpg'));
+                    res.end(imgFile,'binary');
+                    }).listen(4444,()=> console.log("Server is running at port 4444..."));
+                </code>
+                </pre>
+                <p>solution 2</p>
+       <pre>
+       <code class="language-js">
+                const http=require('http');
+                const fs =require('fs');
+                const path =require('path');
+
+                http.createServer((req,res)=>{
+                res.writeHead(200,{
+                'Content-Type':'image/jpeg'
+                });
+                //const imgFile =path.join(__dirname,'test.jpg'); // mistake
+                fs.readFileSync('./test.jpg',(err,data)=>{
+                if(err) throw err;
+                res.end(data);
+                });
+                }).listen(4444,()=> console.log("Server is running at port 4444..."));
+       </code>
+       </pre>
+
+       <p>solution 3</p>
+       <pre>
+       <code class="language-js">
+                const http=require('http');
+                const fs =require('fs');
+                const path =require('path');
+                
+                http.createServer((req,res)=>{
+                res.writeHead(200,{
+                'Content-Type':'image/jpeg'
+                });
+                fs.createReadStream('./test.jpg').pipe(res);
+
+                }).listen(4444,()=> console.log("Server is running at port 4444..."));
+       </code>
+       </pre>
+    
+
+       <p>solution 4</p>
+       <pre>
+       <code class="language-js">
+                const http=require('http');
+                const fs =require('fs');
+                const path =require('path');
+                
+                http.createServer((req,res)=>{
+                res.writeHead(200,{
+                'Content-Type':'image/jpeg'
+                });
+                const img =fs.createReadStream('./test.jpg');
+                img.pipe(res);
+
+                }).listen(4444,()=> console.log("Server is running at port 4444..."));
+       </code>
+       </pre>
+   </div>
+       
+            </div>
+            <script src="./Js/jsintro.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.25.0/prism.min.js" integrity="sha512-hpZ5pDCF2bRCweL5WoA0/N1elet1KYL5mx3LP555Eg/0ZguaHawxNvEjF6O3rufAChs16HVNhEc6blF/rZoowQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        </body>
+        </html>
