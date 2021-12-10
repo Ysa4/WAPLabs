@@ -61,7 +61,7 @@
                 'Content-Type':'image/jpeg'
                 });
                 //const imgFile =path.join(__dirname,'test.jpg'); // mistake
-                fs.readFileSync('./test.jpg',(err,data)=>{
+                fs.readFile('./test.jpg',(err,data)=>{
                 if(err) throw err;
                 res.end(data);
                 });
